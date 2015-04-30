@@ -1,0 +1,12 @@
+tomcat:
+  image: infrabricks/tomcat:8
+  ports:
+    - "8080"
+  volumes:
+    - webapps/status:/webapps/status
+  environment:
+    constraint: zone==dev
+    constraint: disk==ssd
+    SERVICE_8080_NAME: status-http
+    SERVICE_TAGS: tomcat,blue
+    SERVICE_REGION: bee42.1
