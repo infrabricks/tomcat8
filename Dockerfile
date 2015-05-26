@@ -3,9 +3,9 @@ FROM java:8-jre
 MAINTAINER Peter Rossbach <peter.rossbach@bee42.com> @PRossbach
 
 ENV TOMCAT_MAJOR_VERSION=8 \
- TOMCAT_MINOR_VERSION=8.0.21 \
+ TOMCAT_MINOR_VERSION=8.0.22   \
  CATALINA_HOME=/opt/tomcat \
- JOLOKIA_VERSION=1.2.3 \
+ JOLOKIA_VERSION=1.3.0 \
  JAVA_MAXMEMORY=512 \
  TOMCAT_MAXTHREADS=250 \
  TOMCAT_MINSPARETHREADS=4 \
@@ -56,8 +56,8 @@ RUN  TOMCAT_TGZ_URL=https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR
   ${CATALINA_HOME}/bin/*.tar.gz \
   && mkdir -p ${CATALINA_HOME}/work ${CATALINA_HOME}/temp
 
-RUN curl -SL "http://labs.consol.de/maven/repository/org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war" -o ${CATALINA_HOME}/webapps/jolokia.war \
-  && curl -SL "http://labs.consol.de/maven/repository/org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war.asc" -o ${CATALINA_HOME}/webapps/jolokia.war.asc \
+RUN curl -SL "http://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war" -o ${CATALINA_HOME}/webapps/jolokia.war \
+  && curl -SL "http://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war.asc" -o ${CATALINA_HOME}/webapps/jolokia.war.asc \
   && gpg --verify ${CATALINA_HOME}/webapps/jolokia.war.asc \
   && mkdir -p ${CATALINA_HOME}/webapps/jolokia \
   && cd ${CATALINA_HOME}/webapps/jolokia \

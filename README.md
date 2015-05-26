@@ -21,21 +21,21 @@ Another minimal tomcat docker container example can you found at my github proje
 
 ## Build
 
-Create the images with `./build.sh`
+Create all images with `./build-all.sh`
 
-    $ ./build.sh
+    $ ./build.all.sh
     $ docker images | grep infrabricks/tomcat
-    infrabricks/tomcat                       8.0.21-dev          ad95cff93f75        9 minutes ago       868 MB
-    infrabricks/tomcat                       8-dev               ad95cff93f75        9 minutes ago       868 MB
-    infrabricks/tomcat                       8-volume            ce5c040a573f        15 minutes ago      13.35 MB
-    infrabricks/tomcat                       8.0.21-volume       ce5c040a573f        15 minutes ago      13.35 MB
-    infrabricks/tomcat                       201504120951        119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       8.0.21              119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       201504120955        119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       8                   119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       201504120947        119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       latest              119751fe6d65        17 minutes ago      497.6 MB
-    infrabricks/tomcat                       8.0.20              4b37f6bc7608        3 weeks ago         527.2 MB
+    infrabricks/tomcat                                8-volume                 a5469eca0c7b        6 seconds ago        13.25 MB
+    infrabricks/tomcat                                8.0.22-volume            a5469eca0c7b        6 seconds ago        13.25 MB
+    infrabricks/tomcat                                8-tcnative               9f5e757aefed        15 seconds ago       1.017 GB
+    infrabricks/tomcat                                8.0.22-tcnative          9f5e757aefed        15 seconds ago       1.017 GB
+    infrabricks/tomcat                                8.0.22-dev               af48895d90f8        About a minute ago   868.2 MB
+    infrabricks/tomcat                                8-dev                    af48895d90f8        About a minute ago   868.2 MB
+    infrabricks/tomcat                                201505251647             920736ab685c        15 hours ago         497.5 MB
+    infrabricks/tomcat                                201505260746             920736ab685c        15 hours ago         497.5 MB
+    infrabricks/tomcat                                8                        920736ab685c        15 hours ago         497.5 MB
+    infrabricks/tomcat                                8.0.22                   920736ab685c        15 hours ago         497.5 MB
+    infrabricks/tomcat                                latest                   920736ab685c        15 hours ago         497.5 MB
 
 Tomcat is small but Java with debian consume more then >497mb
 
@@ -45,11 +45,11 @@ Information about the installed tomcat version:
 
 ```bash
 $ docker run --rm --entrypoint=/opt/tomcat/bin/version.sh infrabricks/tomcat:8-dev
-Server version: Apache Tomcat/8.0.21
-Server built:   Mar 23 2015 14:11:21 UTC
-Server number:  8.0.21.0
+Server version: Apache Tomcat/8.0.22
+Server built:   Apr 29 2015 11:46:15 UTC
+Server number:  8.0.22.0
 OS Name:        Linux
-OS Version:     3.18.5-tinycore64
+OS Version:     3.18.11-tinycore64
 Architecture:   amd64
 JVM Version:    1.8.0_40-internal-b27
 JVM Vendor:     Oracle Corporation
@@ -65,69 +65,98 @@ $ cat >webapps/status/index.jsp <<EOF
 EOF
 $ CID=$(docker run -d -p 8002:8080 -v `pwd`/webapps/status:/opt/tomcat/webapps/status infrabricks/tomcat:8)
 $ docker logs $CID
-=> Creating and admin user with a random password in Tomcat
-=> Done!
-========================================================================
-You can now configure to this Tomcat server using:
+ => Creating and admin user with a random password in Tomcat
+ => Done!
+ ========================================================================
+ You can now configure to this Tomcat server using:
 
-    admin:AicthGP20029
+     admin:ZwJq6Eqq7Ik4
 
-========================================================================
-Checking *.war in /webapps
-Checking tomcat extended libs *.jar in /libs
-Get http:///var/run/docker.sock/v1.17/images/dab257bbb45e/json: dial unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS?2015-03-17T12:56:08.446+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server version:        Apache Tomcat/8.0.20
-2015-03-17T12:56:08.448+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server built:          Feb 15 2015 18:10:42 UTC
-2015-03-17T12:56:08.449+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server number:         8.0.20.0
-2015-03-17T12:56:08.450+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: OS Name:               Linux
-2015-03-17T12:56:08.451+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: OS Version:            3.18.5-tinycore64
-2015-03-17T12:56:08.452+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Architecture:          amd64
-2015-03-17T12:56:08.453+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Java Home:             /usr/lib/jvm/java-8-openjdk-amd64/jre
-2015-03-17T12:56:08.459+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: JVM Version:           1.8.0_40-internal-b22
-2015-03-17T12:56:08.461+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: JVM Vendor:            Oracle Corporation
-2015-03-17T12:56:08.461+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: CATALINA_BASE:         /opt/tomcat
-2015-03-17T12:56:08.462+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: CATALINA_HOME:         /opt/tomcat
-2015-03-17T12:56:08.463+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties
-2015-03-17T12:56:08.464+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
-2015-03-17T12:56:08.464+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Duser.language=en
-2015-03-17T12:56:08.465+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Duser.country=US
-2015-03-17T12:56:08.466+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Xmx512m
-2015-03-17T12:56:08.467+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.awt.headless=true
-2015-03-17T12:56:08.467+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -DjvmRoute=dab257bbb45e
-2015-03-17T12:56:08.468+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.maxThreads=250
-2015-03-17T12:56:08.469+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.minSpareThreads=4
-2015-03-17T12:56:08.470+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.httpTimeout=20000
-2015-03-17T12:56:08.471+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.ajpTimeout=410000
-2015-03-17T12:56:08.471+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.security.egd=file:/dev/./urandom
-2015-03-17T12:56:08.472+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.client.defaultReadTimeout=180000
-2015-03-17T12:56:08.473+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.client.defaultConnectTimeout=180000
-2015-03-17T12:56:08.473+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.net.preferIPv4Stack=true
-2015-03-17T12:56:08.474+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.inetaddr.ttl=15
-2015-03-17T12:56:08.475+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.rmi.server.hostname=127.0.0.1
-2015-03-17T12:56:08.475+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.rmi.server.useLocalHostname=true
-2015-03-17T12:56:08.476+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote
-2015-03-17T12:56:08.477+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote.ssl=false
-2015-03-17T12:56:08.477+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote.authenticate=false
-2015-03-17T12:56:08.479+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.endorsed.dirs=/opt/tomcat/endorsed
-2015-03-17T12:56:08.480+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcatalina.base=/opt/tomcat
-2015-03-17T12:56:08.480+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcatalina.home=/opt/tomcat
-2015-03-17T12:56:08.481+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.io.tmpdir=/opt/tomcat/temp
-2015-03-17T12:56:08.577+0000 org.apache.coyote.AbstractProtocol init INFO: Initializing ProtocolHandler ["http-nio-8080"]
-2015-03-17T12:56:08.592+0000 org.apache.tomcat.util.net.NioSelectorPool getSharedSelector INFO: Using a shared selector for servlet write/read
-2015-03-17T12:56:08.595+0000 org.apache.coyote.AbstractProtocol init INFO: Initializing ProtocolHandler ["ajp-nio-8009"]
-2015-03-17T12:56:08.597+0000 org.apache.tomcat.util.net.NioSelectorPool getSharedSelector INFO: Using a shared selector for servlet write/read
-2015-03-17T12:56:08.598+0000 org.apache.catalina.startup.Catalina load INFO: Initialization processed in 572 ms
-2015-03-17T12:56:08.636+0000 org.apache.catalina.core.StandardService startInternal INFO: Starting service Catalina
-2015-03-17T12:56:08.636+0000 org.apache.catalina.core.StandardEngine startInternal INFO: Starting Servlet Engine: Apache Tomcat/8.0.20
-2015-03-17T12:56:08.674+0000 org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive /opt/tomcat/webapps/jolokia.war
-2015-03-17T12:56:09.192+0000 org.apache.catalina.core.ApplicationContext log INFO: jolokia-agent: Using access restrictor classpath:/jolokia-access.xml
-2015-03-17T12:56:09.349+0000 org.apache.catalina.startup.HostConfig deployWAR INFO: Deployment of web application archive /opt/tomcat/webapps/jolokia.war has finished in 675 ms
-2015-03-17T12:56:09.351+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deploying web application directory /opt/tomcat/webapps/status
-2015-03-17T12:56:09.407+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deployment of web application directory /opt/tomcat/webapps/status has finished in 56 ms
-2015-03-17T12:56:09.408+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deploying web application directory /opt/tomcat/webapps/manager
-2015-03-17T12:56:09.457+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deployment of web application directory /opt/tomcat/webapps/manager has finished in 49 ms
-2015-03-17T12:56:09.466+0000 org.apache.coyote.AbstractProtocol start INFO: Starting ProtocolHandler ["http-nio-8080"]
-2015-03-17T12:56:09.471+0000 org.apache.coyote.AbstractProtocol start INFO: Starting ProtocolHandler ["ajp-nio-8009"]
-2015-03-17T12:56:09.473+0000 org.apache.catalina.startup.Catalina start INFO: Server startup in 874 ms
+ ========================================================================
+ Checking *.war in /webapps
+ Checking tomcat extended libs *.jar in /libs
+              |   |
+              |   |
+              | # |
+              #####
+              ##+##
+               #+#
+            \   #   /
+             `--+--´
+              / ' \
+             /     \
+            /       \
+           /         \
+          /           \
+         /             \
+        /               \
+       /                 \
+      /                   \
+     /     INFRABRICKS     \
+    /          LINE         \
+   /                         \
+  / peter.rossbach@bee42.com  \
+  #############################
+  #!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+  #!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+  #!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+  #!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+  #!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+  #############################
+     Power by Apache Tomcat
+   https://tomcat.apache.org
+2015-05-26T05:51:45.689+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server version:        Apache Tomcat/8.0.22
+2015-05-26T05:51:45.690+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server built:          Apr 29 2015 11:46:15 UTC
+2015-05-26T05:51:45.691+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Server number:         8.0.22.0
+2015-05-26T05:51:45.692+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: OS Name:               Linux
+2015-05-26T05:51:45.694+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: OS Version:            3.18.11-tinycore64
+2015-05-26T05:51:45.694+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Architecture:          amd64
+2015-05-26T05:51:45.695+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Java Home:             /usr/lib/jvm/java-8-openjdk-amd64/jre
+2015-05-26T05:51:45.700+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: JVM Version:           1.8.0_40-internal-b22
+2015-05-26T05:51:45.701+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: JVM Vendor:            Oracle Corporation
+2015-05-26T05:51:45.702+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: CATALINA_BASE:         /opt/tomcat
+2015-05-26T05:51:45.703+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: CATALINA_HOME:         /opt/tomcat
+2015-05-26T05:51:45.704+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties
+2015-05-26T05:51:45.705+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+2015-05-26T05:51:45.705+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Duser.language=en
+2015-05-26T05:51:45.706+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Duser.country=US
+2015-05-26T05:51:45.707+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Xmx512m
+2015-05-26T05:51:45.708+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.awt.headless=true
+2015-05-26T05:51:45.708+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -DjvmRoute=49150bc5bcba
+2015-05-26T05:51:45.709+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.maxThreads=250
+2015-05-26T05:51:45.710+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.minSpareThreads=4
+2015-05-26T05:51:45.710+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.httpTimeout=20000
+2015-05-26T05:51:45.711+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.ajpTimeout=410000
+2015-05-26T05:51:45.712+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dtomcat.accessLogPattern=%{begin:yyyy-MM-ddTHH:mm:ss:SSSZ}t org.apache.catalina.valves.AccessLogValve access INFO: %h "%r" "%{Referer}i" "%{User-Agent}i" %s %b "%I" %D %S
+2015-05-26T05:51:45.712+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.security.egd=file:/dev/./urandom
+2015-05-26T05:51:45.713+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.client.defaultReadTimeout=180000
+2015-05-26T05:51:45.714+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.client.defaultConnectTimeout=180000
+2015-05-26T05:51:45.714+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.net.preferIPv4Stack=true
+2015-05-26T05:51:45.714+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dsun.net.inetaddr.ttl=15
+2015-05-26T05:51:45.715+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.rmi.server.hostname=127.0.0.1
+2015-05-26T05:51:45.716+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.rmi.server.useLocalHostname=true
+2015-05-26T05:51:45.717+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote
+2015-05-26T05:51:45.717+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote.ssl=false
+2015-05-26T05:51:45.718+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcom.sun.management.jmxremote.authenticate=false
+2015-05-26T05:51:45.718+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.endorsed.dirs=/opt/tomcat/endorsed
+2015-05-26T05:51:45.719+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcatalina.base=/opt/tomcat
+2015-05-26T05:51:45.719+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Dcatalina.home=/opt/tomcat
+2015-05-26T05:51:45.720+0000 org.apache.catalina.startup.VersionLoggerListener log INFO: Command line argument: -Djava.io.tmpdir=/opt/tomcat/temp
+2015-05-26T05:51:45.839+0000 org.apache.coyote.AbstractProtocol init INFO: Initializing ProtocolHandler ["http-nio-8080"]
+2015-05-26T05:51:45.853+0000 org.apache.tomcat.util.net.NioSelectorPool getSharedSelector INFO: Using a shared selector for servlet write/read
+2015-05-26T05:51:45.856+0000 org.apache.coyote.AbstractProtocol init INFO: Initializing ProtocolHandler ["ajp-nio-8009"]
+2015-05-26T05:51:45.857+0000 org.apache.tomcat.util.net.NioSelectorPool getSharedSelector INFO: Using a shared selector for servlet write/read
+2015-05-26T05:51:45.858+0000 org.apache.catalina.startup.Catalina load INFO: Initialization processed in 683 ms
+2015-05-26T05:51:45.897+0000 org.apache.catalina.core.StandardService startInternal INFO: Starting service Catalina
+2015-05-26T05:51:45.898+0000 org.apache.catalina.core.StandardEngine startInternal INFO: Starting Servlet Engine: Apache Tomcat/8.0.22
+2015-05-26T05:51:45.918+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deploying web application directory /opt/tomcat/webapps/status
+2015-05-26T05:51:46.322+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deployment of web application directory /opt/tomcat/webapps/status has finished in 402 ms
+2015-05-26T05:51:46.324+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deploying web application directory /opt/tomcat/webapps/jolokia
+2015-05-26T05:51:46.581+0000 org.apache.catalina.core.ApplicationContext log INFO: jolokia-agent: Using access restrictor classpath:/jolokia-access.xml
+2015-05-26T05:51:46.728+0000 org.apache.catalina.startup.HostConfig deployDirectory INFO: Deployment of web application directory /opt/tomcat/webapps/jolokia has finished in 405 ms
+2015-05-26T05:51:46.737+0000 org.apache.coyote.AbstractProtocol start INFO: Starting ProtocolHandler ["http-nio-8080"]
+2015-05-26T05:51:46.740+0000 org.apache.coyote.AbstractProtocol start INFO: Starting ProtocolHandler ["ajp-nio-8009"]
+2015-05-26T05:51:46.741+0000 org.apache.catalina.startup.Catalina start INFO: Server startup in 882 ms
 ```
 
 ### Access the application
@@ -137,12 +166,10 @@ $ boot2docker ssh
 > echo $IP
 172.17.0.71
 > curl -s http://$IP:8080/status/index.jsp
-
-Tue Mar 17 12:59:19 UTC 2015
+...
 > exit
 $ curl -s http://$(boot2docker ip):8002/status.jsp
-
-Tue Mar 17 12:59:56 UTC 2015
+...
 ```
 
 ### Use the tomcat manager
@@ -257,11 +284,11 @@ $ docker exec -ti tomcat8_tomcat_1 /bin/bash
     "type": "version"
   },
   "value": {
-    "agent": "1.2.3",
+    "agent": "1.3.0",
     "protocol": "7.2",
     "config": {
-      "maxCollectionSize": "1000",
-      "agentId": "172.17.0.181-1-4697411f-servlet",
+      "maxCollectionSize": "0",
+      "agentId": "172.17.0.115-1-e2dd000-servlet",
       "debug": "false",
       "agentType": "servlet",
       "serializeException": "false",
@@ -278,10 +305,10 @@ $ docker exec -ti tomcat8_tomcat_1 /bin/bash
     "info": {
       "product": "tomcat",
       "vendor": "Apache",
-      "version": "8.0.21"
+      "version": "8.0.22"
     }
   },
-  "timestamp": 1428822431,
+  "timestamp": 1432619866,
   "status": 200
 }
 > curl -Ls 127.0.0.1:8080/jolokia/read/java.lang:type=Memory | jq "."
@@ -295,21 +322,21 @@ $ docker exec -ti tomcat8_tomcat_1 /bin/bash
     "Verbose": false,
     "HeapMemoryUsage": {
       "init": 33554432,
-      "committed": 77594624,
+      "committed": 74448896,
       "max": 477626368,
-      "used": 41087240
+      "used": 40225920
     },
     "NonHeapMemoryUsage": {
       "init": 2555904,
-      "committed": 34865152,
+      "committed": 35454976,
       "max": -1,
-      "used": 33903744
+      "used": 34108888
     },
     "ObjectName": {
       "objectName": "java.lang:type=Memory"
     }
   },
-  "timestamp": 1428822529,
+  "timestamp": 1432619913,
   "status": 200
 }
 ```
