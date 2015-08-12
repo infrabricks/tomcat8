@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 (2015-08-12)
+
+* Update Tomcat 8.0.24
+* Update Jolokia 1.3.1
+* Update to java OPENJDK 1.8.0_66
+* Add Dockerfile.rpi
+  * (Raspberry 2 Support JRE 7 hypriot/rpi-java)
+  * ToDo add missing jq
+
 ## 0.2.0 (2015-04-12)
 
 ### Tomcat

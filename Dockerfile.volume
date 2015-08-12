@@ -3,7 +3,7 @@ MAINTAINER Peter Rossbach <peter.rossbach@bee42.com> @PRossbach
 
 RUN opkg-install curl
 
-ENV TOMCAT_MINOR_VERSION 8.0.22
+ENV TOMCAT_MINOR_VERSION 8.0.24
 ENV CATALINA_HOME /opt/tomcat
 
 RUN curl -O http://archive.apache.org/dist/tomcat/tomcat-8/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \

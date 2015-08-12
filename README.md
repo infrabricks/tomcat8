@@ -366,6 +366,39 @@ Apache Tomcat
 * https://www.apache.org/info/verification.html
 * Tomcat Keys file http://svn.apache.org/repos/asf/tomcat/trunk/KEYS
 
+## Tomcat RasPi Support
+
+Create your Raspberry PI BASE SD from hypriot
+
+http://blog.hypriot.com/
+http://blog.hypriot.com/getting-started-with-docker-on-your-arm-device/
+
+```
+docker build -t infrabricks/tomcat:rpi-8.0.24 -f Dockerfile.rpi .
+docker build -t infrabricks/status -f Dockerfile.status .
+docker run --name status infrabricks/status /bin/true
+docker run -d -p 8080:8080 --volumes-from status infrabricks/tomcat:rpi-8.0.24
+```
+
+*WARNING*: Starting simple apps at tomcat needs time!
+
+### ToDo Missing jq
+
+Build static binary with C-Container and add to tomcat.
+
+```
+curl -O https://github.com/stedolan/jq/downlods/source/jq-1.4.tar.gz
+tar xvz jq-1.4.tar.gz
+cd jq-jq-1.4
+# install tools???
+autoreconf -i
+./configure
+make -j8
+make check
+make install
+```
+
+
 ## User Feedback
 
 See my [infrabricks blog](http://www.infrabricks.de) to more informations.

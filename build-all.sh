@@ -2,7 +2,9 @@
 IMAGE=tomcat
 ACCOUNT=infrabricks
 TAG_SHORT=8
-TAG_LONG=8.0.22
+TAG_LONG=8.0.24
+docker pull java:8-jre
+docker pull java:8-jdk
 docker build -t="${ACCOUNT}/$IMAGE" .
 DATE=`date +'%Y%m%d%H%M'`
 IID=$(docker inspect -f "{{.Id}}" ${ACCOUNT}/$IMAGE)
@@ -13,6 +15,10 @@ docker tag -f $IID ${ACCOUNT}/$IMAGE:$TAG_LONG
 docker build -t="${ACCOUNT}/${IMAGE}:${TAG_SHORT}-dev" -f Dockerfile.dev .
 IID=$(docker inspect -f "{{.Id}}" ${ACCOUNT}/$IMAGE:${TAG_SHORT}-dev)
 docker tag -f $IID ${ACCOUNT}/${IMAGE}:${TAG_LONG}-dev
+
+docker build -t="${ACCOUNT}/${IMAGE}:${TAG_SHORT}-onbuild" -f Dockerfile.onbuild .
+IID=$(docker inspect -f "{{.Id}}" ${ACCOUNT}/$IMAGE:${TAG_SHORT}-onbuild)
+docker tag -f $IID ${ACCOUNT}/${IMAGE}:${TAG_LONG}-onbuild
 
 docker build -t="${ACCOUNT}/${IMAGE}:${TAG_SHORT}-tcnative" -f Dockerfile.tcnative-build .
 IID=$(docker inspect -f "{{.Id}}" ${ACCOUNT}/$IMAGE:${TAG_SHORT}-tcnative)
