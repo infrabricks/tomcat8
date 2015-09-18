@@ -160,6 +160,7 @@ $ docker logs $CID
 ```
 
 ### Access the application
+
 ```
 $ boot2docker ssh
 > IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${CID})
@@ -177,6 +178,7 @@ $ curl -s http://$(boot2docker ip):8002/status.jsp
 ![](images/infrabricks-tomcat8-composition.png)
 
 **tomcat-users.xml**
+
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
 <<tomcat-users xmlns="http://tomcat.apache.org/xml"
@@ -277,6 +279,7 @@ RUN \
 
 ### Use Jolokia
 
+```
 $ docker exec -ti tomcat8_tomcat_1 /bin/bash
 > curl 127.0.0.1:8080/jolokia/version | jq "."
 {
@@ -386,16 +389,22 @@ docker run -d -p 8080:8080 --volumes-from status infrabricks/tomcat:rpi-8.0.24
 
 Build static binary with C-Container and add to tomcat.
 
+*Idea*: But not a static binary and must remove tools!
+
 ```
-curl -O https://github.com/stedolan/jq/downlods/source/jq-1.4.tar.gz
-tar xvz jq-1.4.tar.gz
-cd jq-jq-1.4
-# install tools???
-autoreconf -i
-./configure
-make -j8
-make check
-make install
+FROM resin/rpi-raspbian:wheezy
+RUN  apt-get update \
+  && apt-get install -y libapr1-dev libssl-dev gcc tar make \
+  && curl -O https://github.com/stedolan/jq/downlods/source/jq-1.4.tar.gz \
+  && tar xvz jq-1.4.tar.gz \
+  && cd jq-jq-1.4 \
+  && autoreconf -i \
+  && ./configure \
+  && make -j8 \
+  && make check \
+  && make install
+ENTRYPOINT ["jq"]
+CMD ["."]
 ```
 
 

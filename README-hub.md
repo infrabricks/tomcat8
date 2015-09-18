@@ -19,13 +19,15 @@
 
 [More Info](https://github.com/infrabricks/infrabricks-line/tree/master/webserver/tomcat/tomcat8)
 
-This implements some ideas from my german [tomcat blog post](http://www.infrabricks.de/blog/2014/12/19/docker-microservice-basis-mit-apache-tomcat-implementieren/).
+This implements some ideas from my german tomcat blog post:
+
+Tomcat Blog Post www.infrabricks.de/blog/2014/12/19/docker-microservice-basis-mit-apache-tomcat-implementieren/
 
 ## User Feedback
 
-See my [infrabricks blog](http://www.infrabricks.de) to more informations.
+See my infrabricks blog www.infrabricks.de to more informations.
 
-Contact me: Peter <peter.rossbach@bee42.com>
+Contact me: Peter `peter.rossbach@bee42.com`
 
 Follow me [on Twitter](https://twitter.com/PRossbach)
 
@@ -42,7 +44,7 @@ Or just [click here](https://github.com/infrabricks/infrabricks-line/issues/new?
 
 ## License
 
-Copyright (c) 2014-2015 [bee42 solutions Gmbh- Peter Rossbach](http://www.bee42.com)
+Copyright (c) 2014-2015 bee42 solutions Gmbh- Peter Rossbach - http://www.bee42.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -70,7 +72,7 @@ Before you start to code, we recommend discussing your plans through a GitHub is
 
 * [Apache Tomcat](https://tomcat.apache.org)
 * [Docker](https://docker.com)
-* [Infrabricks Blog](http://www.infrabricks.de)
+* Infrabricks Blog www.infrabricks.de
 * [Tomcat Docker hub library images](https://registry.hub.docker.com/u/library/tomcat/)
-* [jolokia](http://www.jolokia.org/)
+* jolokia www.jolokia.org/
 * [Docker maven plugin](https://github.com/rhuss/docker-maven-plugin)

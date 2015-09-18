@@ -5,4 +5,4 @@ MAINTAINER Peter Rossbach <peter.rossbach@bee42.com> @PRossbach
 ONBUILD COPY bin/* ${CATALINA_HOME}/bin/
 ONBUILD COPY conf/* ${CATALINA_HOME}/conf/
 ONBUILD COPY lib/* ${CATALINA_HOME}/lib/
-ONBUILD COPY webapps/* ${CATALINA_HOME}/webapps/
+ONBUILD COPY webapps ${CATALINA_HOME}/webapps/
