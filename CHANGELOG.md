@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1 (2015-09-18)
+* Update Tomcat 8.0.26
+
 ## 0.3.0 (2015-08-12)
 
 * Update Tomcat 8.0.24
