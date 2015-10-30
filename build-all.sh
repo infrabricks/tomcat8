@@ -2,7 +2,7 @@
 IMAGE=tomcat
 ACCOUNT=infrabricks
 TAG_SHORT=8
-TAG_LONG=8.0.26
+TAG_LONG=8.0.28
 docker pull java:8-jre
 docker pull java:8-jdk
 docker build -t="${ACCOUNT}/$IMAGE" .
