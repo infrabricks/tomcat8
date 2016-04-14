@@ -407,6 +407,23 @@ ENTRYPOINT ["jq"]
 CMD ["."]
 ```
 
+## Tomcat based on alpine
+
+```
+$ docker build -t infrabricks/tomcat:8-alpine -f Dockerfile.alpine .
+$ docker run --rm --entrypoint=/opt/tomcat/bin/version.sh infrabricks/tomcat:8-alpine
+Server version: Apache Tomcat/8.0.33
+Server built:   Mar 18 2016 20:31:49 UTC
+Server number:  8.0.33.0
+OS Name:        Linux
+OS Version:     4.1.19-boot2docker
+Architecture:   amd64
+JVM Version:    1.8.0_77-internal-alpine-r0-b03
+JVM Vendor:     Oracle Corporation
+```
+
+* Currently can't check the jolokia package sig (PGG 2 key)
+* Reduce the images size from 330mb to 128md! Very nice!
 
 ## User Feedback
 

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.4 (2016-04-15)
+* Add alpine base Tomcat 8.0.33 with java jre 8.0.77
+  * No jolokia signature check possible!
+  * Image-Size reduce form 330Mb to 128Mb!
+* Update Tomcat 8.0.33
+* Update Jolokia 1.3.3
+* Update Tomcat Native 1.2.5
+  * tcnative use openssl 1.2.0g from sid
+* Update to java OPENJDK 1.8.0_72
+* set remote JMX Port to 127.0.0.1:8001, but don't expose!
+  * If you publish the port, setup ssl and user access (conf/jmxremote.access and conf/jmxremote.password)
+
+## 0.3.3 (2016-01-10)
+* Update Tomcat 8.0.30
+* Update Tomcat Native 1.1.34
+
 ## 0.3.2 (2015-10-30)
 * Update Tomcat 8.0.28
 * Update Jolokia 1.3.2

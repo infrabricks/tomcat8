@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # resolve links - $0 may be a softlink
 PRG="$0"
@@ -86,6 +86,8 @@ export CATALINA_OPTS="$CATALINA_OPTS \
  -Djava.rmi.server.hostname=127.0.0.1 \
  -Djava.rmi.server.useLocalHostname=true \
  -Dcom.sun.management.jmxremote \
+ -Dcom.sun.management.jmxremote.port=8001 \
+ -Dcom.sun.management.jmxremote.rmi.port=8001 \
  -Dcom.sun.management.jmxremote.ssl=false"
 
 if [ -r "$CATALINA_HOME/conf/jmxremote.access" ]; then

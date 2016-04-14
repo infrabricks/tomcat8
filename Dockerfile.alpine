@@ -1,4 +1,4 @@
-FROM hypriot/rpi-java
+FROM java:8-jre-alpine
 
 MAINTAINER Peter Rossbach <peter.rossbach@bee42.com> @PRossbach
 
@@ -6,7 +6,7 @@ ENV TOMCAT_MAJOR_VERSION=8 \
  TOMCAT_MINOR_VERSION=8.0.33 \
  CATALINA_HOME=/opt/tomcat \
  JOLOKIA_VERSION=1.3.3 \
- JAVA_MAXMEMORY=256 \
+ JAVA_MAXMEMORY=512 \
  TOMCAT_MAXTHREADS=250 \
  TOMCAT_MINSPARETHREADS=4 \
  TOMCAT_HTTPTIMEOUT=20000 \
@@ -16,12 +16,9 @@ ENV TOMCAT_MAJOR_VERSION=8 \
  PATH=$PATH:$CATALINA_HOME/bin \
  TOMCAT_ACCESSLOG_PATTERN="%{begin:yyyy-MM-dd'T'HH:mm:ss:SSSZ}t org.apache.catalina.valves.AccessLogValve access INFO: %h \"%r\" \"%{Referer}i\" \"%{User-Agent}i\" %s %b \"%I\" %D %S"
 
-RUN DEBIAN_FRONTEND=noninteractive \
-  apt-get update \
-  && apt-get install -yq pwgen curl unzip \
-  && apt-get clean autoclean \
-  && apt-get autoremove -y \
-  && rm -rf /var/lib/{apt,dpkg,cache,log}
+RUN set -x \
+	&& apk add --no-cache \
+		curl gnupg pwgen jq tar
 
 RUN mkdir -p "$CATALINA_HOME"
 WORKDIR $CATALINA_HOME
@@ -42,7 +39,6 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
 	F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23 \
   && gpg --keyserver pgpkeys.mit.edu --recv-key EF101165
 
-
 RUN  TOMCAT_TGZ_URL=https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz &&  \
  echo $TOMCAT_TGZ_URL && curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	&& curl -SL "$TOMCAT_TGZ_URL.asc" -o tomcat.tar.gz.asc \
@@ -56,9 +52,11 @@ RUN  TOMCAT_TGZ_URL=https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR
   ${CATALINA_HOME}/bin/*.tar.gz \
   && mkdir -p ${CATALINA_HOME}/work ${CATALINA_HOME}/temp
 
+## Don't work with PGP 2 key!
+##  && gpg --verify ${CATALINA_HOME}/webapps/jolokia.war.asc \
+
 RUN curl -SL "http://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war" -o ${CATALINA_HOME}/webapps/jolokia.war \
   && curl -SL "http://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-war/${JOLOKIA_VERSION}/jolokia-war-${JOLOKIA_VERSION}.war.asc" -o ${CATALINA_HOME}/webapps/jolokia.war.asc \
-  && gpg --verify ${CATALINA_HOME}/webapps/jolokia.war.asc \
   && mkdir -p ${CATALINA_HOME}/webapps/jolokia \
   && cd ${CATALINA_HOME}/webapps/jolokia \
   && unzip ../jolokia.war \
