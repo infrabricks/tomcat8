@@ -75,6 +75,7 @@ ADD lib/tomcat-extensions.jar ${CATALINA_HOME}/lib/tomcat-extensions.jar
 ADD lib/jolokia-access.xml ${CATALINA_HOME}/lib/jolokia-access.xml
 
 EXPOSE 8080 8009
+VOLUME /opt/tomcat/logs /opt/tomcat/work /opt/tomcat/temp
 
 ADD LICENSE /etc/LICENSE.tomcat8
 RUN COPYDATE=`date  +'%Y'` \
