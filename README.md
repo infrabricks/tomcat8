@@ -425,6 +425,22 @@ JVM Vendor:     Oracle Corporation
 * Currently can't check the jolokia package sig (PGG 2 key)
 * Reduce the images size from 330mb to 128md! Very nice!
 
+Use a newer Tomcat with more max jvm memory
+
+```
+$ docker build \
+ --build-arg TOMCAT_MINOR_VERSION=8.0.35 \
+ --build-arg JAVA_MAXMEMORY=1024 \
+ -t infrabricks/tomcat:8.0.35-alpine \
+ -f Dockerfile.alpine \
+ git://github.com/infrabricks/tomcat8
+```
+
+more to change
+
+* JOLOKIA_VERSION=1.3.3
+* TOMCAT_MAXTHREADS=250
+
 ## User Feedback
 
 See my [infrabricks blog](http://www.infrabricks.de) to more informations.
